@@ -37,6 +37,7 @@ android {
     }
     buildFeatures {
         compose = true
+        mlModelBinding = true
     }
 }
 
@@ -55,6 +56,8 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.firebase.auth)
+    implementation(libs.tensorflow.lite.support)
+    implementation(libs.tensorflow.lite.metadata)
     testImplementation(libs.junit)
     implementation("com.squareup.retrofit2:retrofit:2.9.0") // Retrofit for API calls
     implementation("com.squareup.retrofit2:converter-gson:2.9.0") // Gson converter for Retrofit
