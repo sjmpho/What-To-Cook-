@@ -1,5 +1,6 @@
 package com.example.whattocook.Fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -14,8 +15,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.whattocook.APIServices.SpoonacularApiService
+import com.example.whattocook.MainActivity
 import com.example.whattocook.Models.RecipesAdapter
 import com.example.whattocook.R
+import com.example.whattocook.containedActivity
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -29,6 +33,7 @@ class HomeFragment : Fragment() {
     private lateinit var generateButton: Button
     private lateinit var recipesRecyclerView: RecyclerView
     private  lateinit var recipesAdapter: RecipesAdapter
+    private  lateinit var floatingActionButton: FloatingActionButton
     private val spoonacularApiService: SpoonacularApiService by lazy {
         Retrofit.Builder()
             .baseUrl("https://api.spoonacular.com/") // Spoonacular base URL
@@ -42,16 +47,25 @@ class HomeFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 
         recipesRecyclerView = view.findViewById(R.id.recycler)
-
+        floatingActionButton = view.findViewById(R.id.floatBTN)
         recipesRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         recipesAdapter = RecipesAdapter(emptyList()) // Initialize with empty list
         recipesRecyclerView.adapter = recipesAdapter
         // Set click listener for the generate button
 
+        floatingActionButton.setOnClickListener{
+            GotoContained()
+        }
             findRecipes("duck")
 
 
         return view
+    }
+    private fun GotoContained(){
+
+        val intent = Intent(requireContext(), containedActivity::class.java)
+        startActivity(intent)
+
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
