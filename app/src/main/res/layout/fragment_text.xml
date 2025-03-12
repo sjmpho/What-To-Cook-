@@ -1,14 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#E92020"
     tools:context=".ContainedFragments.TextFragment">
-
-    <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="What to Cook?"
+        android:textSize="25dp"
+        android:id="@+id/top"
+        android:layout_margin="25dp"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/white"/>
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_marginStart="25dp"
+    android:textColor="@color/white"
+    android:id="@+id/topInstruction"
+    android:layout_below="@id/top"
+    android:text="what ingredients do you have?"
+    android:layout_height="wrap_content"/>
+    <RelativeLayout
+        android:layout_below="@id/topInstruction"
+        android:layout_centerInParent="true"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content">
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:id="@+id/editCard"
 
-</FrameLayout>
+            android:layout_margin="25dp"
+            app:cardCornerRadius="10dp"
+            android:layout_height="wrap_content">
+            <RelativeLayout
+                android:layout_margin="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <EditText
+                    android:id="@+id/sign_in_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Onion,Tomato,wors..."/>
+            </RelativeLayout>
+        </com.google.android.material.card.MaterialCardView>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Submit"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/white"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/submit_btn"
+            android:layout_below="@id/editCard"
+            />
+        <TextView
+            android:layout_below="@id/submit_btn"
+            android:layout_marginStart="25dp"
+            android:textSize="25dp"
+            android:textColor="@color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/suggestions"
+            android:text="Suggestions"/>
+        <LinearLayout
+            android:layout_margin="25dp"
+            android:layout_below="@id/editCard"
+            android:layout_width="match_parent"
+            android:id="@+id/LL_contain_suggestions"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>
