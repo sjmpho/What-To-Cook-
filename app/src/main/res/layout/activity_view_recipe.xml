@@ -1,87 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
-    android:orientation="vertical"
+    android:background="@drawable/table_cloth"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ViewRecipe">
-    <LinearLayout
-        android:layout_margin="15dp"
+
+    <ScrollView
+        android:scrollbars="none"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/view_name"
-            android:text="Meal Name"
-            android:textColor="@color/Red"
-            android:textSize="30dp"
-            android:layout_gravity="center"/>
-        <com.google.android.material.divider.MaterialDivider
-            android:layout_width="match_parent"
-            app:dividerColor="@color/grey"
-            android:layout_height="2dp"/>
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            app:strokeColor="@color/grey"
-            app:cardCornerRadius="22dp"
+        android:layout_height="match_parent"
+        tools:ignore="UselessParent">
+        <LinearLayout
 
-            app:strokeWidth="2dp"
-            android:layout_marginTop="10dp"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:id="@+id/view_image"
+            android:layout_margin="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/view_name"
+                android:text="Meal Name"
+                android:textAlignment="center"
+                android:textColor="@color/Red"
+                android:textSize="30sp"
+                android:layout_gravity="center"/>
+            <com.google.android.material.divider.MaterialDivider
                 android:layout_width="match_parent"
-                android:layout_height="200dp"/>
-        </com.google.android.material.card.MaterialCardView>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Ingredients"
-            android:textColor="@color/Red"
-            android:textSize="25dp"
-            android:layout_gravity="start"/>
-        <com.google.android.material.divider.MaterialDivider
-            android:layout_width="match_parent"
-            android:layout_marginEnd="100dp"
-            app:dividerColor="@color/grey"
-            android:layout_height="2dp"/>
-        <TextView
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:id="@+id/view_ingredients"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="-1 egg \n-2 Cheese Slices \n-Sliced Bread"
-            android:textColor="@color/Red"
-            android:textSize="20dp"
-            android:layout_gravity="start"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Instructions"
-            android:textColor="@color/Red"
-            android:textSize="25dp"
-            android:layout_gravity="start"/>
-        <com.google.android.material.divider.MaterialDivider
-            android:layout_width="match_parent"
-            android:layout_marginEnd="100dp"
-            app:dividerColor="@color/grey"
-            android:layout_height="2dp"/>
-        <TextView
-            android:layout_marginTop="10dp"
-            android:id="@+id/view_instructions"
-            android:layout_marginBottom="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="-1 egg \n-2 Cheese Slices \n-Sliced Bread"
-            android:textColor="@color/Red"
-            android:textSize="20dp"
-            android:layout_gravity="start"/>
+                app:dividerColor="@color/grey"
+                android:layout_height="2dp"/>
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center"
+                app:cardCornerRadius="22dp">
+                <ImageView
+                    android:id="@+id/view_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="200dp"/>
+            </com.google.android.material.card.MaterialCardView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ingredients"
 
-    </LinearLayout>
+                android:textColor="@color/Red"
+                android:textSize="25dp"
+                android:layout_gravity="start"/>
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_marginEnd="100dp"
+                app:dividerColor="@color/grey"
+                android:layout_height="2dp"/>
+            <TextView
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:id="@+id/view_ingredients"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-1 egg \n-2 Cheese Slices \n-Sliced Bread"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:layout_gravity="start"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Instructions"
+                android:textColor="@color/Red"
+                android:textSize="25dp"
+                android:layout_gravity="start"/>
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_marginEnd="100dp"
+                app:dividerColor="@color/grey"
+                android:layout_height="2dp"/>
+            <TextView
+                android:layout_marginTop="10dp"
+                android:id="@+id/view_instructions"
+                android:layout_marginBottom="10dp"
+                android:layout_width="wrap_content"
+                android:textColor="@color/black"
+                android:layout_height="wrap_content"
+                android:text="-1 egg \n-2 Cheese Slices \n-Sliced Bread"
 
-</ScrollView>
+                android:textSize="20dp"
+                android:layout_gravity="start"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</RelativeLayout>

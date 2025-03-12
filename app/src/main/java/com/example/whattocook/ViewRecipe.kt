@@ -51,6 +51,30 @@ class ViewRecipe : AppCompatActivity() {
         image = findViewById(R.id.view_image)
 
         val RecID:Int = intent.getIntExtra("Id",0);
+
+
+
+        val call1 = spoonacularApiService.getRecipeIngredients(RecID, Utility.ApiKey)
+
+        call1.enqueue(object : Callback<RecipeDetails> {
+            override fun onResponse(
+                call: Call<RecipeDetails>,
+                response: Response<RecipeDetails>
+            ) {
+                if (response.isSuccessful) {
+                    response.body()?.let { displayIngredients(it) }
+                } else {
+                    Log.e("ERROR", "Failed to get ingredients")
+                }
+            }
+
+            override fun onFailure(call: Call<RecipeDetails>, t: Throwable) {
+                Log.e("ERROR", "API call failed: ${t.message}")
+            }
+        })
+
+
+
         val call = spoonacularApiService.getRecipeDetails(recipeId = RecID, apiKey = Utility.ApiKey)
 
         call.enqueue(object : Callback<RecipeDetails> {
@@ -90,6 +114,14 @@ class ViewRecipe : AppCompatActivity() {
                 .mapIndexed { index, step -> "${index + 1}. ${step.trim()}" }
                 .joinToString("\n")
         }
+    }
+    fun displayIngredients(recipeIngredients: RecipeDetails) {
+        val ingredientsText = recipeIngredients.extendedIngredients
+            .joinToString("\n") {
+                "${it.amount} ${it.unit} ${it.name}"
+            }
+
+        Ingedients.text = ingredientsText // Set ingredients list to TextView
     }
 
 }

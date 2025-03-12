@@ -19,4 +19,10 @@ interface SpoonacularApiService {
         @Path("id") recipeId: Int,
         @Query("apiKey") apiKey: String
     ): Call<RecipeDetails>
+    @GET("recipes/{id}/information")
+    fun getRecipeIngredients(
+        @Path("id") recipeId: Int,
+        @Query("apiKey") apiKey: String
+    ): Call<RecipeDetails>
+
 }
