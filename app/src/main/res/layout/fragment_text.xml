@@ -5,22 +5,24 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#E92020"
+    android:backgroundTint="#E92020"
     tools:context=".ContainedFragments.TextFragment">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="What to Cook?"
+        android:text="Dont know What to Eat?"
         android:textSize="25dp"
         android:id="@+id/top"
-        android:layout_margin="25dp"
+        android:layout_marginTop="25dp"
         android:textStyle="bold"
         android:layout_centerHorizontal="true"
         android:textColor="@color/white"/>
 <TextView
     android:layout_width="wrap_content"
-    android:layout_marginStart="25dp"
+    android:layout_centerHorizontal="true"
     android:textColor="@color/white"
     android:id="@+id/topInstruction"
+    android:textSize="20dp"
     android:layout_below="@id/top"
     android:text="what ingredients do you have?"
     android:layout_height="wrap_content"/>
@@ -32,7 +34,6 @@
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:id="@+id/editCard"
-
             android:layout_margin="25dp"
             app:cardCornerRadius="10dp"
             android:layout_height="wrap_content">
@@ -41,24 +42,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
                 <EditText
-                    android:id="@+id/sign_in_password"
+                    android:id="@+id/ingredients_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@id/submit_btn"
                     android:hint="Onion,Tomato,wors..."/>
+                <Button
+                    android:layout_alignParentEnd="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Submit"
+                    android:textColor="@color/white"
+                    android:backgroundTint="#E92020"
+                    android:layout_centerHorizontal="true"
+                    android:id="@+id/submit_btn"
+
+                    />
             </RelativeLayout>
         </com.google.android.material.card.MaterialCardView>
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Submit"
-            android:textColor="@color/black"
-            android:backgroundTint="@color/white"
-            android:layout_centerHorizontal="true"
-            android:id="@+id/submit_btn"
-            android:layout_below="@id/editCard"
-            />
+
         <TextView
-            android:layout_below="@id/submit_btn"
+            android:layout_below="@id/editCard"
             android:layout_marginStart="25dp"
             android:textSize="25dp"
             android:textColor="@color/white"
@@ -66,17 +70,32 @@
             android:layout_height="wrap_content"
             android:id="@+id/suggestions"
             android:text="Suggestions"/>
-        <LinearLayout
-            android:layout_margin="25dp"
-            android:layout_below="@id/editCard"
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
-            android:id="@+id/LL_contain_suggestions"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            app:cardCornerRadius="25dp"
+            android:layout_margin="25dp"
+            android:layout_below="@id/suggestions"
+            android:layout_height="match_parent">
+            <androidx.recyclerview.widget.RecyclerView
+                android:backgroundTint="@color/white"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:id="@+id/LL_contain_suggestions"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+            </androidx.recyclerview.widget.RecyclerView>
+        </com.google.android.material.card.MaterialCardView>
 
-        </LinearLayout>
 
     </RelativeLayout>
 
-
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="50dp"
+        android:layout_margin="25dp"
+        android:id="@+id/toScanPage"
+        android:layout_marginBottom="25dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"/>
 </RelativeLayout>

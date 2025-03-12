@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide
 import com.example.whattocook.APIServices.SpoonacularApiService
 import com.example.whattocook.MainActivity
 import com.example.whattocook.Models.RecipesAdapter
+import com.example.whattocook.Models.Utility
 import com.example.whattocook.R
 import com.example.whattocook.containedActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -73,13 +74,12 @@ class HomeFragment : Fragment() {
     }
 
     private fun findRecipes(ingredients: String) {
-        val apiKey = "7a8a68f26c354c599836fb1b9ce60937" // Replace with your API key
 
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val response = spoonacularApiService.findRecipesByIngredients(
                     ingredients = ingredients,
-                    apiKey = apiKey
+                    apiKey = Utility.ApiKey
                 ).execute()
 
                 if (response.isSuccessful) {

@@ -7,6 +7,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import com.example.whattocook.ContainedFragments.ScanFragment
+import com.example.whattocook.ContainedFragments.TextFragment
 
 class containedActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,7 +19,8 @@ class containedActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        switchFragments(ScanFragment())
+
+        switchFragments(TextFragment())
     }
     private fun switchFragments(fragment : Fragment){
         supportFragmentManager.beginTransaction()
