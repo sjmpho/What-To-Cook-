@@ -21,18 +21,21 @@ class RecipesAdapter (private val recipes: List<Recipe>) : RecyclerView.Adapter<
                     .load(recipe.image)
                     .into(recipeImage)
                 recipeTitle.text = recipe.title
-                recipeIngredients.text = "Uses ${recipe.usedIngredientCount} ingredients, misses ${recipe.missedIngredientCount}"
+                recipeIngredients.text = "Uses ${recipe.usedIngredientCount} ingredients, missing ${recipe.missedIngredientCount}"
             }
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeViewHolder {
-            val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_recipe, parent, false)
+            val view = LayoutInflater.from(parent.context).inflate(R.layout.item_recipe, parent, false)
             return RecipeViewHolder(view)
         }
 
         override fun onBindViewHolder(holder: RecipeViewHolder, position: Int) {
             holder.bind(recipes[position])
+            holder.itemView.setOnClickListener{
+                recipes[position].id//pass to api to data
+
+            }
         }
 
         override fun getItemCount(): Int {
