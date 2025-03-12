@@ -50,7 +50,7 @@ class HomeFragment : Fragment() {
         recipesRecyclerView = view.findViewById(R.id.recycler)
         floatingActionButton = view.findViewById(R.id.floatBTN)
         recipesRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        recipesAdapter = RecipesAdapter(emptyList()) // Initialize with empty list
+        recipesAdapter = RecipesAdapter(emptyList(),requireContext()) // Initialize with empty list
         recipesRecyclerView.adapter = recipesAdapter
         // Set click listener for the generate button
 
@@ -86,10 +86,10 @@ class HomeFragment : Fragment() {
                     val recipes = response.body()
                     withContext(Dispatchers.Main) {
                         if (recipes != null && recipes.isNotEmpty()) {
-                          recipesAdapter = RecipesAdapter(recipes)
+                          recipesAdapter = RecipesAdapter(recipes,requireContext())
                             recipesRecyclerView.adapter = recipesAdapter
                         } else {
-                            recipesAdapter = RecipesAdapter(emptyList())
+                            recipesAdapter = RecipesAdapter(emptyList(),requireContext())
                             recipesRecyclerView.adapter = recipesAdapter
                         }
                     }

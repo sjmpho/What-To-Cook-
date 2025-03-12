@@ -1,5 +1,7 @@
 package com.example.whattocook.Models
 
+import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,8 +10,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.whattocook.R
+import com.example.whattocook.ViewRecipe
+import com.example.whattocook.containedActivity
 
-class RecipesAdapter (private val recipes: List<Recipe>) : RecyclerView.Adapter<RecipesAdapter.RecipeViewHolder>() {
+class RecipesAdapter (private val recipes: List<Recipe>,context :Context) : RecyclerView.Adapter<RecipesAdapter.RecipeViewHolder>() {
+val context : Context = context;
 
         inner class RecipeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             private val recipeImage: ImageView = itemView.findViewById(R.id.recipeImage)
@@ -35,6 +40,9 @@ class RecipesAdapter (private val recipes: List<Recipe>) : RecyclerView.Adapter<
             holder.itemView.setOnClickListener{
                 recipes[position].id//pass to api to data
 
+                val intent = Intent(context, ViewRecipe::class.java)
+                intent.putExtra("Id", recipes[position].id)
+                context.startActivity(intent)
             }
         }
 

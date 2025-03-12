@@ -1,6 +1,7 @@
 package com.example.whattocook.APIServices
 
 import com.example.whattocook.Models.Recipe
+import com.example.whattocook.Models.RecipeDetails
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path

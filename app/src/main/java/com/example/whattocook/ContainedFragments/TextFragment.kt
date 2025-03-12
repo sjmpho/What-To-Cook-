@@ -47,7 +47,7 @@ class TextFragment : Fragment() {
         recipesRecyclerView = view.findViewById(R.id.LL_contain_suggestions)
         floatingActionButton = view.findViewById(R.id.toScanPage)
         recipesRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        recipesAdapter = RecipesAdapter(emptyList()) // Initialize with empty list
+        recipesAdapter = RecipesAdapter(emptyList(),requireContext()) // Initialize with empty list
         recipesRecyclerView.adapter = recipesAdapter
 
         Sublit.setOnClickListener{
@@ -80,11 +80,11 @@ class TextFragment : Fragment() {
                     withContext(Dispatchers.Main) {
                         if (recipes != null && recipes.isNotEmpty()) {
                             Log.d("dagger", "findRecipes: should apear"+response.errorBody())
-                           recipesAdapter = RecipesAdapter(recipes)
+                           recipesAdapter = RecipesAdapter(recipes,requireContext())
                             recipesRecyclerView.adapter = recipesAdapter
                         } else {
                             Log.d("dagger", "findRecipes: eerror"+response.errorBody())
-                            recipesAdapter = RecipesAdapter(emptyList())
+                            recipesAdapter = RecipesAdapter(emptyList(),requireContext())
                             recipesRecyclerView.adapter = recipesAdapter
                         }
                     }
