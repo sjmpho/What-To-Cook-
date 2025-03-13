@@ -58,6 +58,7 @@ dependencies {
     implementation(libs.firebase.auth)
     implementation(libs.tensorflow.lite.support)
     implementation(libs.tensorflow.lite.metadata)
+    implementation(libs.firebase.firestore)
     testImplementation(libs.junit)
     implementation ("org.jsoup:jsoup:1.15.4")
 

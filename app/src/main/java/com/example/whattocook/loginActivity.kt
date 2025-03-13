@@ -9,6 +9,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.whattocook.Models.Utility
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
@@ -58,6 +59,7 @@ class loginActivity : AppCompatActivity() {
 
         auth.signInWithEmailAndPassword(emailInput,passwordInput).addOnSuccessListener {
             Toast.makeText(applicationContext, " success login!", Toast.LENGTH_SHORT).show()
+           Utility.UserID = auth.uid.toString()
             GotoHome()
         }.addOnFailureListener{ exception ->
             Toast.makeText(applicationContext, "failed to login "+exception, Toast.LENGTH_SHORT).show()
