@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="10dp"
+    android:layout_width="wrap_content"
+    android:layout_margin="5dp"
+    android:backgroundTint="@color/Red"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_margin="5dp"
+        android:layout_width="wrap_content"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/ingredient_name"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/white"
+            android:layout_height="wrap_content"
+            android:text="Chesse"/>
+        <ImageButton
+            android:id="@+id/remove_ingredient_btn"
+            android:background="@color/Red"
+            android:layout_width="wrap_content"
+            android:src="@drawable/baseline_close_24"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+
+</com.google.android.material.card.MaterialCardView>

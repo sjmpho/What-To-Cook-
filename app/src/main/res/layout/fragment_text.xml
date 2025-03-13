@@ -4,23 +4,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#E92020"
-    android:backgroundTint="#E92020"
+    android:background="@color/white"
+    android:backgroundTint="@color/white"
     tools:context=".ContainedFragments.TextFragment">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Dont know What to Eat?"
+        android:text="Dont know What to Cook?"
         android:textSize="25dp"
         android:id="@+id/top"
         android:layout_marginTop="25dp"
         android:textStyle="bold"
         android:layout_centerHorizontal="true"
-        android:textColor="@color/white"/>
+        android:textColor="@color/Red"/>
 <TextView
     android:layout_width="wrap_content"
     android:layout_centerHorizontal="true"
-    android:textColor="@color/white"
+    android:textColor="@color/Red"
     android:id="@+id/topInstruction"
     android:textSize="20dp"
     android:layout_below="@id/top"
@@ -35,6 +35,8 @@
             android:layout_width="match_parent"
             android:id="@+id/editCard"
             android:layout_margin="25dp"
+            app:strokeWidth="1dp"
+            app:strokeColor="@color/Red"
             app:cardCornerRadius="10dp"
             android:layout_height="wrap_content">
             <RelativeLayout
@@ -60,12 +62,32 @@
                     />
             </RelativeLayout>
         </com.google.android.material.card.MaterialCardView>
-
-        <TextView
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:id="@+id/editCard2"
             android:layout_below="@id/editCard"
             android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            app:strokeWidth="1dp"
+            app:strokeColor="@color/Red"
+            app:cardCornerRadius="10dp"
+            android:layout_height="wrap_content">
+            <LinearLayout
+
+                android:id="@+id/ll_layout"
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
+            </LinearLayout>
+
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:layout_below="@id/editCard2"
+            android:layout_marginStart="25dp"
             android:textSize="25dp"
-            android:textColor="@color/white"
+            android:textColor="@color/Red"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/suggestions"
@@ -73,7 +95,9 @@
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             app:cardCornerRadius="25dp"
+
             android:layout_margin="25dp"
+            android:layout_marginTop="15dp"
             android:layout_below="@id/suggestions"
             android:layout_height="match_parent">
             <androidx.recyclerview.widget.RecyclerView
