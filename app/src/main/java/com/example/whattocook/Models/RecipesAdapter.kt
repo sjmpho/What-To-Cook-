@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide
 import com.example.whattocook.R
 import com.example.whattocook.ViewRecipe
 import com.example.whattocook.containedActivity
+import com.google.firebase.Timestamp
 import kotlinx.coroutines.newSingleThreadContext
 import java.util.Objects
 
@@ -64,7 +65,7 @@ val context : Context = context;
         recip.put("title" , recipe.title)
             recip.put("image" ,recipe.image)
             recip.put("ingredientCount" , recipe.usedIngredientCount +recipe.missedIngredientCount)
-
+            recip.put("timeStamp",Timestamp.now())
 
         return recip
     }

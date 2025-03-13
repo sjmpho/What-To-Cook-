@@ -85,9 +85,14 @@ class ViewRecipe : AppCompatActivity() {
                         mealName.setText(recipeDetails.title)
                         val instructionsHtml = recipeDetails.instructions
                         Log.d("Instructions", "onResponse: "+ recipeDetails.instructions)
-                        val formattedInstructions = formatInstructions(recipeDetails.instructions)
-                        Instruction.text = formattedInstructions
-                        Log.d("Instructions", "onResponse: "+ formattedInstructions)
+                        try {
+                            val formattedInstructions = formatInstructions(recipeDetails.instructions)
+                            Instruction.text = formattedInstructions
+                            Log.d("Instructions", "onResponse: "+ formattedInstructions)
+                        }catch(exception : Exception) {
+                            Log.d("Instructions", "onResponse: exception $exception")
+                        }
+
                         Glide.with(this@ViewRecipe)
                             .load(recipeDetails.image)
                             .into(image)

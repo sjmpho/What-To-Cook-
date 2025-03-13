@@ -92,13 +92,16 @@ class TextFragment : Fragment() {
         val wordText = wordView.findViewById<TextView>(com.example.whattocook.R.id.ingredient_name)
         wordText.text = word
         ingredients_list.add(word.toString())
-        Log.d("dagger", "addWordLayout: aray ${ingredients_list}")
+        findRecipes(ConvertToString())
+        Log.d("dagger", "addWordLayout: aray ${ConvertToString()}")
 
         val removeButton = wordView.findViewById<ImageButton>(com.example.whattocook.R.id.remove_ingredient_btn)
         removeButton.setOnClickListener {
             val wordText = wordView.findViewById<TextView>(com.example.whattocook.R.id.ingredient_name)
             ingredients_list.remove(wordText.text)
-            Log.d("dagger", "addWordLayout: aray ${ingredients_list}")
+
+            Log.d("dagger", "addWordLayout: aray ${ConvertToString()}")
+            findRecipes(ConvertToString())
             currentRow.removeView(wordView)
 
             if (currentRow.isEmpty()) {
@@ -109,6 +112,20 @@ class TextFragment : Fragment() {
 
 
         currentRow.addView(wordView)
+    }
+    private fun ConvertToString(): String{
+        var words : String = ""
+
+        for (word : String in ingredients_list)
+        {
+            if(words.isEmpty())
+                words = word
+            else
+            words += ","+word
+        }
+
+
+        return words
     }
 
 
