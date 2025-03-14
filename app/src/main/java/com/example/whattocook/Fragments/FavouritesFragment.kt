@@ -12,6 +12,7 @@ import com.example.whattocook.Models.Utility
 import com.example.whattocook.Models.firebaseReciepeDetails
 import com.example.whattocook.R
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
+import com.google.firebase.firestore.Query
 
 class FavouritesFragment : Fragment() {
 
@@ -28,7 +29,7 @@ class FavouritesFragment : Fragment() {
         Recyclerview.layoutManager = LinearLayoutManager(requireContext())
 
 
-        val query = Utility.getFavourites()
+        val query = Utility.getFavourites().orderBy("timeStamp",Query.Direction.DESCENDING)
 
         // FirestoreRecyclerOptions
 

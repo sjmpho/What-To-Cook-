@@ -32,7 +32,7 @@ val context : Context = context;
             fun bind(recipe: Recipe) {
                 Glide.with(itemView.context).load(recipe.image).into(recipeImage)
 
-                saveBookMark.setOnClickListener {
+                mark_favourite.setOnClickListener {
 
 
                   val recip = createModel(recipe)
@@ -44,7 +44,7 @@ val context : Context = context;
                     }
 
                 }
-                mark_favourite.setOnClickListener {
+                saveBookMark.setOnClickListener {
                     val recip = createModel(recipe)
                     Utility.getBookmarked().add(recip).addOnSuccessListener {
                         Toast.makeText(context, "Recipe is Marked as favourite", Toast.LENGTH_SHORT).show()

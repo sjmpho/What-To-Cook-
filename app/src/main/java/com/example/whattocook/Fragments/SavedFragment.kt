@@ -5,30 +5,57 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.whattocook.Models.SavedRecipesAdapter
+import com.example.whattocook.Models.Utility
+import com.example.whattocook.Models.firebaseReciepeDetails
 import com.example.whattocook.R
+import com.firebase.ui.firestore.FirestoreRecyclerOptions
+import com.google.firebase.firestore.Query
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [SavedFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class SavedFragment : Fragment() {
 
+    // Use nullable View instead of lateinit
+    lateinit var Recyclerview : RecyclerView
+    lateinit var adapter : SavedRecipesAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    val view =  inflater.inflate(R.layout.fragment_saved, container, false)
+
+        Recyclerview = view.findViewById(R.id.recyclerVIew)
+        Recyclerview.layoutManager = LinearLayoutManager(requireContext())
 
 
-        return inflater.inflate(R.layout.fragment_saved, container, false)
+        val query = Utility.getBookmarked().orderBy("timeStamp", Query.Direction.DESCENDING)
+
+        // FirestoreRecyclerOptions
+
+        val options = FirestoreRecyclerOptions.Builder<firebaseReciepeDetails>()
+            .setQuery(query, firebaseReciepeDetails::class.java)
+            .build()
+        adapter = SavedRecipesAdapter(options)
+        Recyclerview.adapter = adapter
+
+
+
+
+        return view
     }
+
+    override fun onStart() {
+        super.onStart()
+        adapter.startListening()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        adapter.stopListening()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // Initialize views and handle logic here
-        // Example: view.findViewById<TextView>(R.id.textView).text = "Favourites"
+
     }
 
 

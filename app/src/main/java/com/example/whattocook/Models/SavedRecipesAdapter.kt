@@ -1,16 +1,22 @@
 package com.example.whattocook.Models
 
+import android.content.Context
+import android.content.Intent
+import android.graphics.ColorFilter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.compose.ui.graphics.Color
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.whattocook.R
+import com.example.whattocook.ViewRecipe
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
+
 
 class SavedRecipesAdapter (options: FirestoreRecyclerOptions<firebaseReciepeDetails>) : FirestoreRecyclerAdapter<firebaseReciepeDetails, SavedRecipesAdapter.ItemViewHolder>(options) {
 
@@ -25,6 +31,8 @@ class SavedRecipesAdapter (options: FirestoreRecyclerOptions<firebaseReciepeDeta
 
         fun bind(item: firebaseReciepeDetails) {
             nameTextView.text = item.title
+           // favourite.setImageIcon()
+
             descriptionTextView.text = item.ingredientCount.toString()
             Glide.with(itemView.context).load(item.image).into(image)
         }
@@ -37,5 +45,13 @@ class SavedRecipesAdapter (options: FirestoreRecyclerOptions<firebaseReciepeDeta
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int, model: firebaseReciepeDetails) {
         holder.bind(model)
+        holder.itemView.setOnClickListener{
+
+       //implement the button here
+
+          /*  val intent = Intent(, ViewRecipe::class.java)
+            intent.putExtra("Id", model.id)
+            context.startActivity(intent)*/
+        }
     }
 }
