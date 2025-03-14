@@ -61,7 +61,9 @@ dependencies {
     implementation(libs.firebase.firestore)
     testImplementation(libs.junit)
     implementation ("org.jsoup:jsoup:1.15.4")
-
+    implementation ("androidx.recyclerview:recyclerview:1.3.2")
+    implementation ("com.firebaseui:firebase-ui-firestore:8.0.2")
+    implementation ("com.google.firebase:firebase-firestore-ktx:25.1.2")
     implementation("com.squareup.retrofit2:retrofit:2.9.0") // Retrofit for API calls
     implementation("com.squareup.retrofit2:converter-gson:2.9.0") // Gson converter for Retrofit
     implementation(libs.glide) // Glide for image loading

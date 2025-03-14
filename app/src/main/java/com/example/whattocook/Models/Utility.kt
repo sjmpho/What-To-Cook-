@@ -16,6 +16,7 @@ public  class Utility {
         fun getBookmarked(): CollectionReference {
             return Firebase.firestore.collection("Users").document(UserID).collection("Bookmarked")
         }
+
     }
 
 }
