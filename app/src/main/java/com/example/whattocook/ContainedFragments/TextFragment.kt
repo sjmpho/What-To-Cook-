@@ -31,6 +31,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import androidx.core.view.isEmpty
 import com.example.whattocook.ScanActivity
 import com.example.whattocook.containedActivity
+import com.google.firebase.firestore.getField
 
 
 class TextFragment : Fragment() {
@@ -203,6 +204,32 @@ class TextFragment : Fragment() {
                 e.printStackTrace()
             }
         }
+    }
+    fun mineData(){
+        //retrive data
+        var arryOfSearches : ArrayList<String>?
+        arryOfSearches = arrayListOf()
+        Utility.SearchData().get().addOnSuccessListener {
+            document ->
+            arryOfSearches = document.get("searched") as? ArrayList<String>
+        }
+        if(arryOfSearches != null)
+        {
+            for (ingri in ingredients_list)
+            {
+                if(!arryOfSearches!!.contains(ingri)){
+                    arryOfSearches!!.add(ingri)
+                }
+            }
+
+        }else{
+            arryOfSearches = ingredients_list
+        }
+        Utility.SearchData().set(arryOfSearches!!).addOnSuccessListener {
+            Log.d("", "mineData: saved searches")
+        }
+
+
     }
 
 }
