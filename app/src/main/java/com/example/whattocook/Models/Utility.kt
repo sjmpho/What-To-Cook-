@@ -2,6 +2,7 @@ package com.example.whattocook.Models
 
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.firestore
 
 public  class Utility {
@@ -15,6 +16,9 @@ public  class Utility {
         }
         fun getBookmarked(): CollectionReference {
             return Firebase.firestore.collection("Users").document(UserID).collection("Bookmarked")
+        }
+        fun SearchData() : DocumentReference{
+            return  Firebase.firestore.collection("SavedSearches").document(UserID)
         }
 
     }

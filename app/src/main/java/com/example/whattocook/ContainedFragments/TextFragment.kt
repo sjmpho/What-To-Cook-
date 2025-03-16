@@ -2,6 +2,8 @@ package com.example.whattocook.ContainedFragments
 
 
 import android.R
+import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -27,6 +29,8 @@ import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import androidx.core.view.isEmpty
+import com.example.whattocook.ScanActivity
+import com.example.whattocook.containedActivity
 
 
 class TextFragment : Fragment() {
@@ -62,6 +66,10 @@ class TextFragment : Fragment() {
 
         ingredients_list = arrayListOf()
 
+        floatingActionButton.setOnClickListener{
+
+            GotoContained()
+        }
 
         Sublit.setOnClickListener{
 
@@ -79,6 +87,12 @@ class TextFragment : Fragment() {
         }
 
         return view
+    }
+    private fun GotoContained(){
+
+        val intent = Intent(requireContext(), ScanActivity ::class.java)
+        startActivity(intent)
+
     }
     fun addWordLayout(word: String?) {
 
@@ -113,6 +127,7 @@ class TextFragment : Fragment() {
 
         currentRow.addView(wordView)
     }
+    @SuppressLint("SuspiciousIndentation")
     private fun ConvertToString(): String{
         var words : String = ""
 
