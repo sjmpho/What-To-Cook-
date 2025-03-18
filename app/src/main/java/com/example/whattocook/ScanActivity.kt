@@ -13,6 +13,7 @@ import android.hardware.camera2.CameraManager
 import android.os.Bundle
 import android.os.Handler
 import android.os.HandlerThread
+import android.util.Log
 import android.view.TextureView
 import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
@@ -20,10 +21,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.whattocook.ml.SsdMobilenetV11Metadata1
+import org.tensorflow.lite.DataType
+import org.tensorflow.lite.Interpreter
 import org.tensorflow.lite.support.common.FileUtil
+import org.tensorflow.lite.support.common.ops.NormalizeOp
 import org.tensorflow.lite.support.image.ImageProcessor
 import org.tensorflow.lite.support.image.TensorImage
 import org.tensorflow.lite.support.image.ops.ResizeOp
+import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
 
 class ScanActivity : AppCompatActivity() {
 
@@ -56,10 +61,11 @@ class ScanActivity : AppCompatActivity() {
 
         labels = FileUtil.loadLabels(applicationContext,"labels.txt")
         imageView = findViewById(R.id.imageView)
-        imageProcessor = ImageProcessor.Builder().add(
-            ResizeOp(300,300,
-                ResizeOp.ResizeMethod.BILINEAR)
-        ).build()
+        imageProcessor = ImageProcessor.Builder()
+            .add(ResizeOp(300, 300, ResizeOp.ResizeMethod.BILINEAR))
+            .add(NormalizeOp(0f, 255f))
+            .build()
+
         model = SsdMobilenetV11Metadata1.newInstance(applicationContext)
         val handlerThread = HandlerThread("VideoThread")
         handlerThread.start()
@@ -79,45 +85,93 @@ class ScanActivity : AppCompatActivity() {
             }
 
             override fun onSurfaceTextureUpdated(p0: SurfaceTexture) {
-                bitmap =textureView.bitmap!!
-                var image = TensorImage.fromBitmap(bitmap)
-                image = imageProcessor.process(image)
+                bitmap = textureView.bitmap ?: return
 
+                // Resize and preprocess the image
+                val imageProcessor = ImageProcessor.Builder()
+                    .add(ResizeOp(300, 300, ResizeOp.ResizeMethod.BILINEAR)) // Resize to 300x300
+                    .add(NormalizeOp(0f, 255f)) // Normalize pixel values to [0, 1]
+                    .build()
 
-// Creates inputs for reference.
-// Runs model inference and gets result.
-                val outputs = model.process(image)
-                val locations = outputs.locationsAsTensorBuffer.floatArray
-                val classes = outputs.classesAsTensorBuffer.floatArray
-                val scores = outputs.scoresAsTensorBuffer.floatArray
-                val numberOfDetections = outputs.numberOfDetectionsAsTensorBuffer.floatArray
+                // Convert Bitmap to TensorImage
+                val tensorImage = TensorImage(DataType.FLOAT32)
+                tensorImage.load(bitmap)
 
-                var mutable = bitmap.copy(Bitmap.Config.ARGB_8888,true)
+                // Process the image
+                val processedImage = imageProcessor.process(tensorImage)
+
+                // Get the TensorBuffer
+                val inputBuffer = processedImage.tensorBuffer
+
+                // Verify input buffer size
+                Log.d("ScanActivity", "Input buffer size: ${inputBuffer.buffer.capacity()}")
+
+                // Load the model
+                val modelFile = FileUtil.loadMappedFile(applicationContext, "ssd_mobilenet_v1_1_metadata_1.tflite")
+                val interpreter = Interpreter(modelFile)
+
+                // Prepare output buffers
+                val outputBoxes = TensorBuffer.createFixedSize(intArrayOf(1, 12276, 4), DataType.FLOAT32)
+                val outputScores = TensorBuffer.createFixedSize(intArrayOf(1, 12276, 5), DataType.FLOAT32)
+
+                // Run inference
+                interpreter.runForMultipleInputsOutputs(arrayOf(inputBuffer.buffer), mapOf(
+                    0 to outputBoxes.buffer,
+                    1 to outputScores.buffer
+                ))
+
+                // Access outputs
+                val detectionBoxes = outputBoxes.floatArray
+                val detectionScores = outputScores.floatArray
+
+                // Process outputs
+                val numDetections = detectionScores.size / 5 // Assuming 5 classes (including background)
+                val mutable = bitmap.copy(Bitmap.Config.ARGB_8888, true)
                 val canvas = android.graphics.Canvas(mutable)
 
                 val h = mutable.height
                 val w = mutable.width
-                paint.textSize = h/15f
-                paint.strokeWidth = h/85f
-                var x = 0
-                scores.forEachIndexed { index, fl ->
-                    x = index
-                    x *= 4
-                    if(fl > 0.5){
-                        paint.setColor(colors.get(index))
+                paint.textSize = h / 15f
+                paint.strokeWidth = h / 85f
+
+                for (i in 0 until numDetections) {
+                    // Get the bounding box coordinates
+                    val yMin = detectionBoxes[i * 4 + 0]
+                    val xMin = detectionBoxes[i * 4 + 1]
+                    val yMax = detectionBoxes[i * 4 + 2]
+                    val xMax = detectionBoxes[i * 4 + 3]
+
+                    // Get the confidence scores for each class
+                    val classScores = detectionScores.sliceArray(i * 5 until (i + 1) * 5)
+
+                    // Find the class with the highest score
+                    val maxScore = classScores.maxOrNull() ?: 0f
+                    val classId = classScores.indexOfFirst { it == maxScore }
+
+                    // Draw bounding box and label if the score is above a threshold
+                    if (maxScore > 0.5) {
+                        paint.color = colors[classId]
                         paint.style = Paint.Style.STROKE
-                        canvas.drawRect(RectF(locations.get(x+1)*w, locations.get(x)*h, locations.get(x+3)*w, locations.get(x+2)*h), paint)
+                        canvas.drawRect(
+                            RectF(
+                                xMin * w,
+                                yMin * h,
+                                xMax * w,
+                                yMax * h
+                            ), paint
+                        )
                         paint.style = Paint.Style.FILL
-                        canvas.drawText(labels.get(classes.get(index).toInt())+" "+fl.toString(), locations.get(x+1)*w, locations.get(x)*h, paint)
+                        canvas.drawText(
+                            "${labels[classId]} $maxScore",
+                            xMin * w,
+                            yMin * h,
+                            paint
+                        )
                     }
                 }
 
                 imageView.setImageBitmap(mutable)
-// Releases model resources if no longer used.
-
-
             }
-
         }
         cameraManager = getSystemService(Context.CAMERA_SERVICE) as CameraManager;
 

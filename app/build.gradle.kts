@@ -59,6 +59,7 @@ dependencies {
     implementation(libs.tensorflow.lite.support)
     implementation(libs.tensorflow.lite.metadata)
     implementation(libs.firebase.firestore)
+   // implementation(libs.litert.support.api)
     testImplementation(libs.junit)
     implementation ("org.jsoup:jsoup:1.15.4")
     implementation ("androidx.recyclerview:recyclerview:1.3.2")
