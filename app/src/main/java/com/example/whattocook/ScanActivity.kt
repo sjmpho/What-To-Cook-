@@ -89,7 +89,7 @@ class ScanActivity : AppCompatActivity() {
 
                 // Resize and preprocess the image
                 val imageProcessor = ImageProcessor.Builder()
-                    .add(ResizeOp(300, 300, ResizeOp.ResizeMethod.BILINEAR)) // Resize to 300x300
+                    .add(ResizeOp(256, 256, ResizeOp.ResizeMethod.BILINEAR)) // Resize to 256x256
                     .add(NormalizeOp(0f, 255f)) // Normalize pixel values to [0, 1]
                     .build()
 
@@ -125,7 +125,7 @@ class ScanActivity : AppCompatActivity() {
                 val detectionScores = outputScores.floatArray
 
                 // Process outputs
-                val numDetections = detectionScores.size / 5 // Assuming 5 classes (including background)
+                val numDetections = detectionBoxes.size / 4 // Correct calculation
                 val mutable = bitmap.copy(Bitmap.Config.ARGB_8888, true)
                 val canvas = android.graphics.Canvas(mutable)
 
@@ -149,8 +149,8 @@ class ScanActivity : AppCompatActivity() {
                     val classId = classScores.indexOfFirst { it == maxScore }
 
                     // Draw bounding box and label if the score is above a threshold
-                    if (maxScore > 0.5) {
-                        paint.color = colors[classId]
+                    if (maxScore > 0.2) {
+                        paint.color = colors[classId % colors.size] // Use modulo to avoid out-of-bounds
                         paint.style = Paint.Style.STROKE
                         canvas.drawRect(
                             RectF(
@@ -161,12 +161,18 @@ class ScanActivity : AppCompatActivity() {
                             ), paint
                         )
                         paint.style = Paint.Style.FILL
-                        canvas.drawText(
-                            "${labels[classId]} $maxScore",
-                            xMin * w,
-                            yMin * h,
-                            paint
-                        )
+
+                        // Check if classId is within bounds
+                        if (classId >= 0 && classId < labels.size) {
+                            canvas.drawText(
+                                "${labels[classId]} $maxScore",
+                                xMin * w,
+                                yMin * h,
+                                paint
+                            )
+                        } else {
+                            Log.e("ScanActivity", "Invalid class ID: $classId")
+                        }
                     }
                 }
 
