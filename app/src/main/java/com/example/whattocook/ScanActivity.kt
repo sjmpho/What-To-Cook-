@@ -136,10 +136,16 @@ class ScanActivity : AppCompatActivity() {
 
                 for (i in 0 until numDetections) {
                     // Get the bounding box coordinates
-                    val yMin = detectionBoxes[i * 4 + 0]
-                    val xMin = detectionBoxes[i * 4 + 1]
-                    val yMax = detectionBoxes[i * 4 + 2]
-                    val xMax = detectionBoxes[i * 4 + 3]
+                    val yMin = detectionBoxes[i * 4 + 0] // Top (normalized)
+                    val xMin = detectionBoxes[i * 4 + 1] // Left (normalized)
+                    val yMax = detectionBoxes[i * 4 + 2] // Bottom (normalized)
+                    val xMax = detectionBoxes[i * 4 + 3] // Right (normalized)
+
+                    // Scale the coordinates to the display dimensions
+                    val left = xMin * w
+                    val top = yMin * h
+                    val right = xMax * w
+                    val bottom = yMax * h
 
                     // Get the confidence scores for each class
                     val classScores = detectionScores.sliceArray(i * 5 until (i + 1) * 5)
@@ -154,10 +160,10 @@ class ScanActivity : AppCompatActivity() {
                         paint.style = Paint.Style.STROKE
                         canvas.drawRect(
                             RectF(
-                                xMin * w,
-                                yMin * h,
-                                xMax * w,
-                                yMax * h
+                                left,  // Scaled left
+                                top,   // Scaled top
+                                right, // Scaled right
+                                bottom // Scaled bottom
                             ), paint
                         )
                         paint.style = Paint.Style.FILL
@@ -166,8 +172,8 @@ class ScanActivity : AppCompatActivity() {
                         if (classId >= 0 && classId < labels.size) {
                             canvas.drawText(
                                 "${labels[classId]} $maxScore",
-                                xMin * w,
-                                yMin * h,
+                                left, // Scaled left
+                                top,  // Scaled top
                                 paint
                             )
                         } else {
