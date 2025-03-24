@@ -71,6 +71,7 @@ class ScanActivity : AppCompatActivity() {
         handlerThread.start()
         handler = Handler(handlerThread.looper)
         textureView =  findViewById(R.id.textureView)
+
         textureView.surfaceTextureListener = object: TextureView.SurfaceTextureListener{
             override fun onSurfaceTextureAvailable(p0: SurfaceTexture, p1: Int, p2: Int) {
                 open_camera()
